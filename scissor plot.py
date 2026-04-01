@@ -2,19 +2,6 @@
 Scissor Plot Generator — AE3211-I Aircraft Tutorial
 Group 45 | CRJ-1000 reference aircraft
 =====================================================
-FIXES APPLIED vs previous version:
-  1. Downwash gradient: now uses the geometric formula
-       dε/dα = 4·cos(Λ_0.25c) / (AR + 2·cos(Λ_0.25c))
-     instead of the Slingerland formula with compressibility-corrected CLα_w.
-     The downwash is an incompressible potential-flow phenomenon — using the
-     M=0.78 (cruise) lift slope inflated dε/dα by ~30%, making the tail appear
-     artificially ineffective and shifting the stability line far left.
-
-  2. Controllability formula: now correctly uses (xcg - x_ac_wf) as the moment
-     arm, not just xcg. The missing x_ac_wf term was shifting the controllability
-     line ~22% MAC to the left, placing it well outside the feasible region.
-
-Run with:  python scissor_plot.py
 """
 
 import numpy as np
@@ -77,8 +64,8 @@ Cm_ac_wf_approach = -0.4754   # full flaps, approach      (controllability line)
 CL_max_wf = 2.840   # approach, full HLD
 
 # ── CG range from loading diagram ────────────────────────────────
-cg_fwd =     # fill in
-cg_aft =     # fill in
+cg_fwd = 0.098    # fill in
+cg_aft = 0.56   # fill in
 
 # =============================================================================
 #  FUNCTIONS
@@ -224,7 +211,7 @@ ax.set_xlim(-0.1, 0.9)
 ax.set_ylim(0.0,  1.2)
 ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x*100:.0f}%'))
 ax.grid(True, linestyle='--', linewidth=0.4, alpha=0.5)
-ax.legend(fontsize=9, loc='upper left')
+ax.legend(fontsize=9, loc='lower left')
 
 plt.tight_layout()
 plt.savefig('scissor_plot.pdf', dpi=150, bbox_inches='tight')
