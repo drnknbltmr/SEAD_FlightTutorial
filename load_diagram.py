@@ -3,8 +3,9 @@ import numpy as np
 
 # Aircraft Data
 OEW = 23_178.0      # kg - Operational Empty Weight
-OEW_CG = 20.79      # m - OEW center of gravity
-MAC = 3.48          # m - Mean Aerodynamic Chord
+OEW_CG = 20.59      # m - OEW center of gravity
+MAC = 3.48
+          # m - Mean Aerodynamic Chord
 LEMAC = 19.2084     # m - Leading Edge of MAC
 
 # Payload & Fuel
@@ -16,8 +17,8 @@ FUEL_MAX = 5_670.0
 # Longitudinal Arms
 CARGO_FRONT_ARM = (9.89 + 12.73) / 2
 CARGO_AFT_ARM = 29.0
-FUEL_ARM = 19.0
-rows = np.linspace(6.0, 27.0, 25)
+FUEL_ARM = 18.0
+rows = np.linspace(6, 27.0, 25)
 
 def to_mac(arm):
     """Convert arm from nose [m] to % MAC."""
