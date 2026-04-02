@@ -15,6 +15,12 @@ NLG_w = 0.008*EOW
 Propulsion_sys_w = 0.133 * EOW
 Cockpit_sys_w = 0.023*EOW
 
+Battery_w_back = 2475.00
+Battery_w_front = 2025.00 
+
+Battery_x_cg_front = 11.31
+Battery_x_cg_back = 29.00
+
 Wing_group_W = Wing_w + MLG_w
 Fuselage_group_W = Fuselage_w + NLG_w + Cockpit_sys_w + Propulsion_sys_w + HTail_w + VTail_w
 Other_comp_w =EOW - (Wing_group_W + Fuselage_group_W)
@@ -76,11 +82,11 @@ x_cg_propulsion = 0.4*1.33*2.4716 + 28.6
 x_cg_cockpit = x_cg_NLG 
 
 Wing_grpoup_cg = (Wing_w * x_cg_wing + MLG_w * x_cg_MLG) / (Wing_w + MLG_w)
-print("Wing group cg from nose: ", Wing_grpoup_cg)
-Fuselage_group_cg = (Fuselage_w * x_cg_fuselage + NLG_w * x_cg_NLG + Cockpit_sys_w * x_cg_cockpit + Propulsion_sys_w * x_cg_propulsion + HTail_w * x_cg_HTail + VTail_w * x_cg_Vertical_tail) / Fuselage_group_W
-print("Fuselage group cg from nose: ", Fuselage_group_cg)
-EOW_cg = (Wing_group_W * Wing_grpoup_cg + Fuselage_group_W * Fuselage_group_cg) / (Wing_group_W + Fuselage_group_W)
 
+Fuselage_group_cg = (Fuselage_w * x_cg_fuselage + NLG_w * x_cg_NLG + Cockpit_sys_w * x_cg_cockpit + Propulsion_sys_w * x_cg_propulsion + HTail_w * x_cg_HTail + VTail_w * x_cg_Vertical_tail) / Fuselage_group_W
+
+EOW_cg = (Wing_group_W * Wing_grpoup_cg + Fuselage_group_W * Fuselage_group_cg) / (Wing_group_W + Fuselage_group_W)
+print("EOW CG from nose: ", EOW_cg)
 c_root = 5.7
 taper = c_t/c_root
 #x_MAC = (2*c_root)/3 * (1+taper+taper**2)/(1+taper)
@@ -101,4 +107,30 @@ x_cg_LEMAC_cockpit = x_cg_cockpit - x_LEMAC
 Wing_grpoup_cg_LEMAC = (Wing_w * x_cg_LEMAC_wing + MLG_w * x_cg_LEMAC_MLG) / Wing_group_W
 Fuselage_group_cg_LEMAC = (Fuselage_w * x_cg_LEMAC_fuselage + NLG_w * x_cg_LEMAC_NLG + Cockpit_sys_w * x_cg_LEMAC_cockpit + Propulsion_sys_w * x_cg_LEMAC_propulsion + HTail_w * x_cg_LEMAC_HTail + VTail_w * x_cg_LEMAC_Vertical_tail) / Fuselage_group_W
 EOW_cg_LEMAC = (Wing_group_W * Wing_grpoup_cg_LEMAC + Fuselage_group_W * Fuselage_group_cg_LEMAC) / (Wing_group_W + Fuselage_group_W)   
-print("EOW cg from nose: ", EOW_cg)
+
+
+#NEW CG 
+new_wing = Wing_w * (1-0.09)
+new_fuselage = Fuselage_w * (1-0.07)
+Battery_w_total = Battery_w_back + Battery_w_front
+Battery_x_cg = (Battery_w_front * Battery_x_cg_front + Battery_w_back * Battery_x_cg_back) / Battery_w_total
+
+New_Wing_group_W = new_wing + MLG_w
+New_Fuselage_group_W = new_fuselage + NLG_w + Cockpit_sys_w + Propulsion_sys_w + HTail_w + VTail_w + Battery_w_total
+
+New_Wing_grpoup_cg = (new_wing * x_cg_wing + MLG_w * x_cg_MLG) / New_Wing_group_W
+print("New Wing group CG from nose: ", New_Wing_grpoup_cg)
+New_Fuselage_group_cg = (new_fuselage * x_cg_fuselage + NLG_w * x_cg_NLG + Cockpit_sys_w * x_cg_cockpit + Propulsion_sys_w * x_cg_propulsion + HTail_w * x_cg_HTail + VTail_w * x_cg_Vertical_tail + Battery_w_total * Battery_x_cg) / New_Fuselage_group_W
+print("New Fuselage group CG from nose: ", New_Fuselage_group_cg)   
+New_EOW_cg = (New_Wing_group_W * New_Wing_grpoup_cg + New_Fuselage_group_W * New_Fuselage_group_cg) / (New_Wing_group_W + New_Fuselage_group_W)
+Battery_x_cg_LEMAC = Battery_x_cg - x_LEMAC
+New_Wing_grpoup_cg_LEMAC = (new_wing * x_cg_LEMAC_wing + MLG_w * x_cg_LEMAC_MLG) / New_Wing_group_W
+print("New Wing group CG from LEMAC [m]: ", New_Wing_grpoup_cg_LEMAC)
+New_Fuselage_group_cg_LEMAC = (new_fuselage * x_cg_LEMAC_fuselage + NLG_w * x_cg_LEMAC_NLG + Cockpit_sys_w * x_cg_LEMAC_cockpit + Propulsion_sys_w * x_cg_LEMAC_propulsion + HTail_w * x_cg_LEMAC_HTail + VTail_w * x_cg_LEMAC_Vertical_tail + Battery_w_total * Battery_x_cg_LEMAC) / New_Fuselage_group_W
+print("New Fuselage group CG from LEMAC [m]: ", New_Fuselage_group_cg_LEMAC)    
+New_EOW_cg_LEMAC = (New_Wing_group_W * New_Wing_grpoup_cg_LEMAC + New_Fuselage_group_W * New_Fuselage_group_cg_LEMAC) / (New_Wing_group_W + New_Fuselage_group_W)
+New_EOW_cg_LEMAC_pct = New_EOW_cg_LEMAC / x_MAC * 100
+print("New EOW CG from nose: ", New_EOW_cg)
+print("New EOW CG from LEMAC [m]: ", New_EOW_cg_LEMAC)
+print("New EOW CG from LEMAC [% MAC]: ", New_EOW_cg_LEMAC_pct)
+   

@@ -1,1 +1,0 @@
-print("GLory to the Mossad")

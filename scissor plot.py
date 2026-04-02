@@ -98,9 +98,9 @@ ax.plot([cg_fwd, cg_aft], [Vh_required, Vh_required], '^', color='#C94B00', ms=7
 
 ax.axvline(0.4545, color='orange', lw=1.0, ls=':', label='OEW CG = 45.45% MAC')
 
-ax.set_xlabel('CG position  (fraction of MAC from LEMAC)', fontsize=11)
-ax.set_ylabel('Tail volume coefficient  V̄_H  [–]',        fontsize=11)
-ax.set_title('Scissor plot — CRJ-1000  (Group 45)',        fontsize=13)
+ax.set_xlabel('CG position (fraction of MAC)', fontsize=11)
+ax.set_ylabel('Tail volume coefficient V̄_H', fontsize=11)
+ax.set_title('Scissor plot — CRJ-1000', fontsize=13)
 ax.set_xlim(-0.1, 0.9)
 ax.set_ylim(0.0,  1.4)
 ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x*100:.0f}%'))

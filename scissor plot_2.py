@@ -91,9 +91,7 @@ def vh_required(x_ac, CLa_wf_c, CLa_h_c, de_da, CLa_h_a, Cm_appro, CLmax,
     Vh_c = -(Cm_appro + CLmax*(cg_fwd - x_ac)) / (eta*abs(CLh_max)*(1-de_da))
     return max(Vh_s, Vh_c), Vh_s, Vh_c
 
-# ─────────────────────────────────────────────────────────────────
-#  COMPUTE
-# ─────────────────────────────────────────────────────────────────
+# COMPUTE
 Vh_design = tail_volume(S_h, l_h, S, c_mac)
 Vh_arr    = np.linspace(0.0, 1.6, 600)
 cg_arr    = np.linspace(-0.1, 0.9, 600)
@@ -189,8 +187,8 @@ for ax, (tag, p) in zip(axes, configs.items()):
     ax.set_xlim(-0.1, 0.9)
     ax.set_ylim(0.0,  1.55)
     ax.xaxis.set_major_formatter(pct)
-    ax.set_xlabel('CG position  (fraction of MAC from LEMAC)', fontsize=10)
-    ax.set_title(f'Scissor plot — {tag}  (Group 45)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('CG position (fraction of MAC)', fontsize=10)
+    ax.set_title(f'Scissor plot — {tag}', fontsize=12, fontweight='bold')
     ax.grid(True, ls='--', lw=0.4, alpha=0.5)
     ax.legend(fontsize=8.2, loc='upper left')
 
